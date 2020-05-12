@@ -51,7 +51,7 @@ public class Screen extends JPanel implements Runnable, KeyListener {
 	snake = new ArrayList<BodyPart>(); 
 	apples = new ArrayList<Apple>(); 
 	start();
-
+	
 	}
 	
 	//----------------

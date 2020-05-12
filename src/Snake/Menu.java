@@ -88,6 +88,14 @@ public class Menu extends JFrame {
 		JButton btnNewButton_2 = new JButton("Ranking");
 		btnNewButton_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+			JFrame wyniki = new JFrame();
+			Ranking ranking = new Ranking(WIDTH, HEIGHT);
+			wyniki.getContentPane().add(ranking); 
+			wyniki.setUndecorated(true); 
+			wyniki.setResizable(false); 
+			wyniki.pack(); 
+			wyniki.setLocationRelativeTo(null); 
+			wyniki.setVisible(true);
 			}
 		});
 		contentPane.add(btnNewButton_2, BorderLayout.EAST);
