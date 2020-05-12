@@ -21,7 +21,7 @@ public class Menu extends JFrame {
 	// private JPanel contentPane;
 	
 	private static final long serialVersionUID = 1L; private JPanel contentPane;
-	private static final int WIDTH = 200, HEIGHT = 200;
+	private static final int WIDTH = 200, HEIGHT = 220;
 
 	/**
 	 * Launch the application.
@@ -62,7 +62,7 @@ public class Menu extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				JFrame game = new JFrame();
 				Screen screen = new Screen( WIDTH, HEIGHT ) ; 
-				game.add(screen); 
+				game.getContentPane().add(screen); 
 				game.setUndecorated(true); 
 				game.setResizable(false); 
 				game.pack(); 
@@ -82,13 +82,19 @@ public class Menu extends JFrame {
 			}
 		});
 		
-		
-		
 		btnNewButton_1.setFont(new Font("Gurmukhi Sangam MN", Font.BOLD, 24));
 		contentPane.add(btnNewButton_1, BorderLayout.CENTER);
 		
+		JButton btnNewButton_2 = new JButton("Ranking");
+		btnNewButton_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		contentPane.add(btnNewButton_2, BorderLayout.EAST);
+		
 
-		JFrame menu = new JFrame(); menu.setUndecorated(true);
+		JFrame menu = new JFrame(); 
+		menu.setUndecorated(true);
 		menu.setFocusable(true);
 		menu.setPreferredSize(new Dimension(WIDTH, HEIGHT)); menu.setResizable(false);
 		menu.pack(); menu.setLocationRelativeTo(null); menu.setVisible(true);

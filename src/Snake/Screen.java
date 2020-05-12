@@ -2,13 +2,23 @@ package Snake;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Frame;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.Random;
+import java.io.File;
+import java.io.PrintWriter;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+
+
 
 public class Screen extends JPanel implements Runnable, KeyListener {
 	
@@ -23,9 +33,10 @@ public class Screen extends JPanel implements Runnable, KeyListener {
 	private Apple apple; //jabłko
 	private ArrayList<Apple> apples; // jabłka 
 	private Random r;
+	public int score;
 	
 	private int xCoor = 10, yCoor = 10; // początkowe położenie 
-	private int size = 5; //początkowy rozmiar
+	private int size = 3; //początkowy rozmiar
 	private int snakeSpeed = 250000 * 5; // prędkość węża
 	
 	// początkowy kierunek ruchu
@@ -40,7 +51,7 @@ public class Screen extends JPanel implements Runnable, KeyListener {
 	snake = new ArrayList<BodyPart>(); 
 	apples = new ArrayList<Apple>(); 
 	start();
-	
+
 	}
 	
 	//----------------
@@ -73,7 +84,7 @@ public class Screen extends JPanel implements Runnable, KeyListener {
 		}
 		
 		// sprawdzenie czy waz zjadl jablko
-		//jezeli tak to zwieksz rozmiar i usun jablko 
+		//jezeli tak to zwieksz rozmiar i usun jablko I DODAJ PUNKT DO WYNIKU
 		
 		for(int i = 0; i < apples.size(); i++) 
 		{
@@ -82,9 +93,11 @@ public class Screen extends JPanel implements Runnable, KeyListener {
 			         size++;
 			         apples.remove(i);
 			         i++;
+			         score++;
 			} 
 			
 		}
+		
 		
 		
 		// sprawdzenie czy waz nie ugryzl ogona
@@ -131,7 +144,7 @@ public class Screen extends JPanel implements Runnable, KeyListener {
 			
 			b=new BodyPart(xCoor,yCoor,10);
 			snake.add(b);
-			snakeSpeed = snakeSpeed - 2000;
+			snakeSpeed = snakeSpeed - 200;
 			
 			// sprawdzenie czy wąż jest większy od wartości size 
 			//jezeli tak to usuwana jest ostatnia czesc 
@@ -141,9 +154,43 @@ public class Screen extends JPanel implements Runnable, KeyListener {
 				snake.remove(0);
 				}
 		}
+		
+		
 	}
 	
+	//----------------
+	public void ZapiszWynik(int score)
+	{
+		this.score=score;
+		
+		for(int i = 0; i < apples.size(); i++) 
+		{
+			if(xCoor == apples.get(i).getxCoor() && yCoor == apples.get(i).getyCoor()) 
+			{
+			         i++;
+			         score++;
+			         System.out.print(score);
+			} 
+			
+		}
+		
+		
+		PrintWriter zapis = null;
 	
+		 try {
+	            zapis = new PrintWriter(new FileWriter("wyniki.txt", true));
+	            zapis.println(score);
+	            
+	            
+	         } catch (IOException e) {
+				
+				e.printStackTrace();
+			 } finally {
+	            if (zapis != null) {
+	                zapis.close();
+	            }
+			}
+}
 	//----------------
 	
 		public void paint(Graphics g) 
@@ -172,6 +219,10 @@ public class Screen extends JPanel implements Runnable, KeyListener {
 			{
 			    apples.get(i).draw(g);
 			}
+			Font myFont = new Font ("Courier New", 1, 17);
+
+			g.setFont (myFont);
+			g.drawString("Score: " + score, 115, 10);
 		}
 	
 		//----
@@ -189,7 +240,7 @@ public class Screen extends JPanel implements Runnable, KeyListener {
 		{
 			running = false;
 			setVisible(false);
-			
+			ZapiszWynik(score);
 			final Frame[] frames = Frame.getFrames(); 
 			
 			for (final Frame frame : frames) 
@@ -197,6 +248,7 @@ public class Screen extends JPanel implements Runnable, KeyListener {
 				if (frame.isVisible() && frame.isActive()) 
 				{ 
 					frame.dispose();
+					
 				} 
 			}
 			
@@ -267,7 +319,7 @@ public class Screen extends JPanel implements Runnable, KeyListener {
 		}
 		
 		
-	
+		
 //-------------- koniec	
 }	
 	
