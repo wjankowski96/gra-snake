@@ -10,6 +10,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Scanner;
  
 
@@ -44,7 +45,9 @@ public class Ranking extends JPanel
 		
 		do {
 			kolejneWyniki[i]=scan.nextInt();
+			
 			i++;
+
 		}while (scan.hasNext() && i<5);
 		scan.close();
         
